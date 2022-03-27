@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="twaddler-1.0">
+    <output-path>$PROJECT_DIR$/out/artifacts/twaddler_1_0</output-path>
+    <root id="archive" name="twaddler-1.0.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="Twaddler" />
+      <element id="artifact" artifact-name="Dependencies" />
+    </root>
+  </artifact>
+</component>

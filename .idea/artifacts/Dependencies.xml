@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact name="Dependencies">
+    <output-path>$PROJECT_DIR$/out/artifacts/Dependencies</output-path>
+    <root id="root">
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.2" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.2" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.2.1" />
+      <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.11.4" />
+      <element id="library" level="project" name="Maven: com.oracle.database.jdbc:ojdbc8:19.12.0.0" />
+      <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+      <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.28" />
+      <element id="library" level="project" name="Maven: org.bouncycastle:bcprov-jdk15on:1.70" />
+    </root>
+  </artifact>
+</component>
