@@ -2,6 +2,7 @@ package com.projectgalen.utils;
 
 import org.intellij.lang.annotations.RegExp;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Objects;
@@ -24,6 +25,7 @@ public class Regex {
      * @return The matcher.
      * @throws java.util.regex.PatternSyntaxException if the syntax of the regex is bad.
      */
+    @NotNull
     public static Matcher getMatcher(@NotNull @RegExp String regex, @NotNull CharSequence input) { return getMatcher(regex, input, 0); }
 
     /**
@@ -101,7 +103,7 @@ public class Regex {
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(@Nullable Object o) {
             return ((this == o) || ((o != null) && (getClass() == o.getClass()) && _equals((CacheKey)o)));
         }
 

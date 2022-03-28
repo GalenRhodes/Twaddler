@@ -90,6 +90,7 @@ public class GResourceBundle extends ResourceBundle {
      * @throws NullPointerException if <code>key</code> is <code>null</code>
      */
     @Override
+    @Nullable
     protected Object handleGetObject(@NotNull String key) {
         return _get(key, 100);
     }
@@ -135,5 +136,12 @@ public class GResourceBundle extends ResourceBundle {
             bundles = null;
             stack.put(baseName, bundle);
         }
+    }
+
+    @NotNull
+    protected static GResourceBundle _getInstance() { return Holder.INSTANCE; }
+
+    private static final class Holder {
+        private static final GResourceBundle INSTANCE = new GResourceBundle("com.projectgalen.utils.messages");
     }
 }
