@@ -1,18 +1,18 @@
 package com.projectgalen.utils;
 
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 public class IO {
 
-    public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+    public static final Charset DEFAULT_CHARSET;
 
     private IO() { }
 
@@ -177,12 +177,12 @@ public class IO {
     }
 
     @NotNull
-    public static String readFile(@NotNull String filename, @NotNull Charset cs) throws IOException {
+    public static String readFile(@NotNull @NonNls String filename, @NotNull Charset cs) throws IOException {
         return readFile(new File(filename), cs);
     }
 
     @NotNull
-    public static String readFile(@NotNull String filename) throws IOException {
+    public static String readFile(@NotNull @NonNls String filename) throws IOException {
         return readFile(filename, DEFAULT_CHARSET);
     }
 
@@ -210,5 +210,12 @@ public class IO {
     @NotNull
     public static String readFile(@NotNull URLConnection uconn) throws IOException {
         return readFile(uconn, DEFAULT_CHARSET);
+    }
+
+    static {
+        Charset cs = null;
+        try { cs = Charset.forName(GProperties._getInstance().getProperty("default.encoding", "UTF-8")); }
+        catch(Exception e) { cs = Charset.defaultCharset(); }
+        DEFAULT_CHARSET = cs;
     }
 }

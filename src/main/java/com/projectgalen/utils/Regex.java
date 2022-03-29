@@ -1,6 +1,7 @@
 package com.projectgalen.utils;
 
-import org.intellij.lang.annotations.RegExp;
+import org.intellij.lang.annotations.Language;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,7 +27,7 @@ public class Regex {
      * @throws java.util.regex.PatternSyntaxException if the syntax of the regex is bad.
      */
     @NotNull
-    public static Matcher getMatcher(@NotNull @RegExp String regex, @NotNull CharSequence input) { return getMatcher(regex, input, 0); }
+    public static Matcher getMatcher(@NotNull @NonNls @Language("RegExp") String regex, @NotNull CharSequence input) { return getMatcher(regex, input, 0); }
 
     /**
      * Get a new matcher from a chached Regular Expression regex.
@@ -42,7 +43,7 @@ public class Regex {
      * @throws IllegalArgumentException               If bit values other than those corresponding to the defined match flags are set in flags.
      */
     @NotNull
-    public static Matcher getMatcher(@NotNull @RegExp String regex, @NotNull CharSequence input, int flags) {
+    public static Matcher getMatcher(@NotNull @NonNls @Language("RegExp") String regex, @NotNull CharSequence input, int flags) {
         synchronized(CACHE) {
             CacheKey key = new CacheKey(regex, flags);
             Pattern  p   = CACHE.get(key);
@@ -52,10 +53,10 @@ public class Regex {
     }
 
     private static class CacheKey implements Comparable<CacheKey> {
-        @NotNull @RegExp final String regex;
+        @NotNull @NonNls final String regex;
         final                  int    flags;
 
-        protected CacheKey(@NotNull @RegExp String regex, int flags) {
+        protected CacheKey(@NotNull @NonNls @Language("RegExp") String regex, int flags) {
             this.regex = regex;
             this.flags = flags;
         }

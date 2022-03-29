@@ -1,5 +1,6 @@
 package com.projectgalen.utils;
 
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,76 +10,82 @@ public class GResourceBundle extends ResourceBundle {
     private final LinkedHashMap<String, ResourceBundle> stack   = new LinkedHashMap<>();
     private       ResourceBundle[]                      bundles = null;
 
-    public GResourceBundle(@NotNull String baseName) {
+    public GResourceBundle(@NotNull @NonNls String baseName) {
         this(baseName, getBundle(baseName));
     }
 
-    public GResourceBundle(@NotNull String baseName, @NotNull Locale locale) {
+    public GResourceBundle(@NotNull @NonNls String baseName, @NotNull Locale locale) {
         this(baseName, getBundle(baseName, locale));
     }
 
-    public GResourceBundle(@NotNull String baseName, @NotNull ClassLoader classLoader) {
+    public GResourceBundle(@NotNull @NonNls String baseName, @NotNull ClassLoader classLoader) {
         this(baseName, getBundle(baseName, Locale.getDefault(), classLoader));
     }
 
-    public GResourceBundle(@NotNull String baseName, @NotNull Control control) {
+    public GResourceBundle(@NotNull @NonNls String baseName, @NotNull Control control) {
         this(baseName, getBundle(baseName, Locale.getDefault(), control));
     }
 
-    public GResourceBundle(@NotNull String baseName, @NotNull Locale locale, @NotNull Control control) {
+    public GResourceBundle(@NotNull @NonNls String baseName, @NotNull Locale locale, @NotNull Control control) {
         this(baseName, getBundle(baseName, locale, control));
     }
 
-    public GResourceBundle(@NotNull String baseName, @NotNull ClassLoader classLoader, @NotNull Control control) {
+    public GResourceBundle(@NotNull @NonNls String baseName, @NotNull ClassLoader classLoader, @NotNull Control control) {
         this(baseName, getBundle(baseName, Locale.getDefault(), classLoader, control));
     }
 
-    public GResourceBundle(@NotNull String baseName, @NotNull Locale locale, @NotNull ClassLoader classLoader) {
+    public GResourceBundle(@NotNull @NonNls String baseName, @NotNull Locale locale, @NotNull ClassLoader classLoader) {
         this(baseName, getBundle(baseName, locale, classLoader));
     }
 
-    public GResourceBundle(@NotNull String baseName, @NotNull Locale locale, @NotNull ClassLoader classLoader, @NotNull Control control) {
+    public GResourceBundle(@NotNull @NonNls String baseName, @NotNull Locale locale, @NotNull ClassLoader classLoader, @NotNull Control control) {
         this(baseName, getBundle(baseName, locale, classLoader, control));
     }
 
-    private GResourceBundle(@NotNull String baseName, @NotNull ResourceBundle bundle) {
+    private GResourceBundle(@NotNull @NonNls String baseName, @NotNull ResourceBundle bundle) {
         super();
         synchronized(stack) { stack.put(baseName, bundle); }
     }
 
-    public void addBundle(@NotNull String baseName) {
+    public void addBundle(@NotNull @NonNls String baseName) {
         addBundle(baseName, getBundle(baseName));
     }
 
-    public void addBundle(@NotNull String baseName, @NotNull Locale locale) {
+    public void addBundle(@NotNull @NonNls String baseName, @NotNull Locale locale) {
         addBundle(baseName, getBundle(baseName, locale));
     }
 
-    public void addBundle(@NotNull String baseName, @NotNull ClassLoader classLoader) {
+    public void addBundle(@NotNull @NonNls String baseName, @NotNull ClassLoader classLoader) {
         addBundle(baseName, getBundle(baseName, Locale.getDefault(), classLoader));
     }
 
-    public void addBundle(@NotNull String baseName, @NotNull Control control) {
+    public void addBundle(@NotNull @NonNls String baseName, @NotNull Control control) {
         addBundle(baseName, getBundle(baseName, Locale.getDefault(), control));
     }
 
-    public void addBundle(@NotNull String baseName, @NotNull Locale locale, @NotNull Control control) {
+    public void addBundle(@NotNull @NonNls String baseName, @NotNull Locale locale, @NotNull Control control) {
         addBundle(baseName, getBundle(baseName, locale, control));
     }
 
-    public void addBundle(@NotNull String baseName, @NotNull ClassLoader classLoader, @NotNull Control control) {
+    public void addBundle(@NotNull @NonNls String baseName, @NotNull ClassLoader classLoader, @NotNull Control control) {
         addBundle(baseName, getBundle(baseName, Locale.getDefault(), classLoader, control));
     }
 
-    public void addBundle(@NotNull String baseName, @NotNull Locale locale, @NotNull ClassLoader classLoader) {
+    public void addBundle(@NotNull @NonNls String baseName, @NotNull Locale locale, @NotNull ClassLoader classLoader) {
         addBundle(baseName, getBundle(baseName, locale, classLoader));
     }
 
-    public void addBundle(@NotNull String baseName, @NotNull Locale locale, @NotNull ClassLoader classLoader, @NotNull Control control) {
+    public void addBundle(@NotNull @NonNls String baseName, @NotNull Locale locale, @NotNull ClassLoader classLoader, @NotNull Control control) {
         addBundle(baseName, getBundle(baseName, locale, classLoader, control));
     }
 
-    public ResourceBundle removeBundle(@NotNull String baseName) {
+    @NotNull
+    public String format(@NonNls @NotNull String formatKey, Object... args) { return String.format(getString(formatKey), args); }
+
+    @NotNull
+    public String format(@NotNull Locale locale, @NotNull @NonNls String formatKey, Object... args) { return String.format(locale, getString(formatKey), args); }
+
+    public ResourceBundle removeBundle(@NotNull @NonNls String baseName) {
         synchronized(stack) { return stack.remove(baseName); }
     }
 
@@ -91,7 +98,7 @@ public class GResourceBundle extends ResourceBundle {
      */
     @Override
     @Nullable
-    protected Object handleGetObject(@NotNull String key) {
+    protected Object handleGetObject(@NotNull @NonNls String key) {
         return _get(key, 100);
     }
 
@@ -110,7 +117,7 @@ public class GResourceBundle extends ResourceBundle {
     }
 
     @Nullable
-    private Object _get(@NotNull String key, int deadMan) {
+    private Object _get(@NotNull @NonNls String key, int deadMan) {
         synchronized(stack) {
             if(bundles == null) bundles = stack.values().toArray(new ResourceBundle[0]);
             for(int i = 0, j = (bundles.length - 1); i < bundles.length; i++) {
@@ -131,7 +138,7 @@ public class GResourceBundle extends ResourceBundle {
         return null;
     }
 
-    private void addBundle(@NotNull String baseName, @NotNull ResourceBundle bundle) {
+    private void addBundle(@NotNull @NonNls String baseName, @NotNull ResourceBundle bundle) {
         synchronized(stack) {
             bundles = null;
             stack.put(baseName, bundle);

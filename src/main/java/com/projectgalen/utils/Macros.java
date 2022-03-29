@@ -1,19 +1,16 @@
 package com.projectgalen.utils;
 
-import org.intellij.lang.annotations.RegExp;
+import org.intellij.lang.annotations.Language;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Matcher;
 
 public class Macros {
-    @RegExp public static final String MACRO_PATTERN = "\\$\\{([^}]+)}";
+    @NonNls @Language("RegExp") public static final String MACRO_PATTERN = "\\$\\{([^}]+)}";
 
     private Macros() { }
-
-    public interface GetMacroReplacement {
-        @Nullable String getReplacement(@NotNull String name);
-    }
 
     public static String replaceMacros(@Nullable String str, @NotNull GetMacroReplacement handler) {
         if(str == null) return null;
@@ -28,5 +25,9 @@ public class Macros {
         while(matcher.find());
 
         return matcher.appendTail(sb).toString();
+    }
+
+    public interface GetMacroReplacement {
+        @Nullable String getReplacement(@NotNull @NonNls String name);
     }
 }
