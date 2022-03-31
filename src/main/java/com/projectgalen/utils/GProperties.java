@@ -15,6 +15,7 @@ import java.math.MathContext;
 import java.net.URL;
 import java.util.*;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class GProperties extends Properties {
 
     private static final          GResourceBundle MSGS  = GResourceBundle._getInstance();
@@ -170,7 +171,7 @@ public class GProperties extends Properties {
     @Nullable
     public List<String> getList(@NotNull @NonNls String key,
                                 @NotNull @Language("RegExp") @NonNls String separatorRegex,
-                                @Nullable List<String> defaults, @NotNull Class<? extends List<String>> listClass) {
+                                @Nullable List<String> defaults, @NotNull Class<? extends List> listClass) {
         String str = getProperty(key);
         if(str == null) return defaults;
         try {
@@ -184,29 +185,27 @@ public class GProperties extends Properties {
     }
 
     @NotNull
-    public List<String> getList(@NotNull @NonNls String key, @NotNull @Language("RegExp") @NonNls String separatorRegex, @NotNull Class<? extends List<String>> listClass) {
+    public List<String> getList(@NotNull @NonNls String key, @NotNull @Language("RegExp") @NonNls String separatorRegex, @NotNull Class<? extends List> listClass) {
         return Objects.requireNonNull(getList(key, separatorRegex, Collections.emptyList(), listClass));
     }
 
     @Nullable
-    public List<String> getList(@NotNull @NonNls String key, @Nullable List<String> defaults, @NotNull Class<? extends List<String>> listClass) {
+    public List<String> getList(@NotNull @NonNls String key, @Nullable List<String> defaults, @NotNull Class<? extends List> listClass) {
         return getList(key, PROPS.getProperty("default.list.separator.regexp"), defaults, listClass);
     }
 
     @NotNull
-    public List<String> getList(@NotNull @NonNls String key, @NotNull Class<? extends List<String>> listClass) {
+    public List<String> getList(@NotNull @NonNls String key, @NotNull Class<? extends List> listClass) {
         return Objects.requireNonNull(getList(key, PROPS.getProperty("default.list.separator.regexp"), Collections.emptyList(), listClass));
     }
 
     @Nullable
     public List<String> getList(@NotNull @NonNls String key, @NotNull @Language("RegExp") @NonNls String separatorRegex, @Nullable List<String> defaults) {
         try {
-            //noinspection unchecked
-            return getList(key, separatorRegex, defaults, (Class<? extends List<String>>)Class.forName(PROPS.getProperty("default.list.classname")));
+            return getList(key, separatorRegex, defaults, (Class<? extends List>)Class.forName(PROPS.getProperty("default.list.classname")));
         }
         catch(Exception e) {
-            //noinspection unchecked
-            return getList(key, separatorRegex, defaults, (Class<? extends List<String>>)ArrayList.class);
+            return getList(key, separatorRegex, defaults, ArrayList.class);
         }
     }
 
@@ -238,7 +237,7 @@ public class GProperties extends Properties {
                                       @NotNull @NonNls @Language("RegExp") String separatorRegexp,
                                       @NotNull @NonNls @Language("RegExp") String keyValueRegexp,
                                       @Nullable Map<String, String> defaults,
-                                      @NotNull Class<? extends Map<String, String>> mapClass) {
+                                      @NotNull Class<? extends Map> mapClass) {
         List<String> list = getList(key, separatorRegexp, (List<String>)null);
         if(list == null) return defaults;
 
@@ -262,12 +261,10 @@ public class GProperties extends Properties {
                                       @NotNull @NonNls @Language("RegExp") String keyValueRegexp,
                                       @Nullable Map<String, String> defaults) {
         try {
-            //noinspection unchecked
-            return getMap(key, separatorRegexp, keyValueRegexp, defaults, (Class<? extends Map<String, String>>)Class.forName(PROPS.getProperty("default.map.classname")));
+            return getMap(key, separatorRegexp, keyValueRegexp, defaults, (Class<? extends Map>)Class.forName(PROPS.getProperty("default.map.classname")));
         }
         catch(ClassNotFoundException e) {
-            //noinspection unchecked
-            return getMap(key, separatorRegexp, keyValueRegexp, defaults, (Class<? extends Map<String, String>>)LinkedHashMap.class);
+            return getMap(key, separatorRegexp, keyValueRegexp, defaults, LinkedHashMap.class);
         }
     }
 
@@ -275,7 +272,7 @@ public class GProperties extends Properties {
     public Map<String, String> getMap(@NotNull @NonNls String key,
                                       @NotNull @NonNls @Language("RegExp") String separatorRegexp,
                                       @NotNull @NonNls @Language("RegExp") String keyValueRegexp,
-                                      @NotNull Class<? extends Map<String, String>> mapClass) {
+                                      @NotNull Class<? extends Map> mapClass) {
         return Objects.requireNonNull(getMap(key, separatorRegexp, keyValueRegexp, Collections.emptyMap(), mapClass));
     }
 
@@ -287,7 +284,7 @@ public class GProperties extends Properties {
     }
 
     @Nullable
-    public Map<String, String> getMap(@NotNull @NonNls String key, @Nullable Map<String, String> defaults, @NotNull Class<? extends Map<String, String>> mapClass) {
+    public Map<String, String> getMap(@NotNull @NonNls String key, @Nullable Map<String, String> defaults, @NotNull Class<? extends Map> mapClass) {
         return getMap(key,
                       PROPS.getProperty("default.list.separator.regexp"),
                       PROPS.getProperty("default.kv.separator.regexp"),
@@ -304,7 +301,7 @@ public class GProperties extends Properties {
     }
 
     @NotNull
-    public Map<String, String> getMap(@NotNull @NonNls String key, @NotNull Class<? extends Map<String, String>> mapClass) {
+    public Map<String, String> getMap(@NotNull @NonNls String key, @NotNull Class<? extends Map> mapClass) {
         return getMap(key,
                       PROPS.getProperty("default.list.separator.regexp"),
                       PROPS.getProperty("default.kv.separator.regexp"),
